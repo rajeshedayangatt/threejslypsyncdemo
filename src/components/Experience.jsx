@@ -1,11 +1,11 @@
 import { Environment, OrbitControls} from "@react-three/drei";
 import { Avatar } from "./Avatar";
 
-export const Experience = () => {
+export const Experience = ({loaderset}) => {
   return (
     <>
       <OrbitControls />
-      <Avatar />
+      <Avatar loaderset={loaderset} />
       <Environment preset="sunset"   background={true} />
       <directionalLight />
 

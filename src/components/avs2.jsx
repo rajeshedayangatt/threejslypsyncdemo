@@ -2,7 +2,7 @@ import React, { useRef , useState } from 'react'
 import { useFrame, useLoader } from "@react-three/fiber";
 import {FileLoader,MathUtils} from "three"
 import { useEffect, useMemo } from "react";
-import { useAnimations, useFBX, useGLTF } from "@react-three/drei"
+import { useAnimations, useFBX, useGLTF , useProgress } from "@react-three/drei"
 
 
 const corresponding = {
@@ -20,6 +20,12 @@ const corresponding = {
 
 export function Model(props) {
   const { scene,  nodes, materials ,animations } = useGLTF('660d047d3b585fbcc4fa776a.glb')
+
+  const {progress} = useProgress()
+
+  props.loaderset(progress)
+
+
 
   const { animations: idleanimation } = useFBX("animations/Idle (3).fbx");
   const { animations: talkinganimation } = useFBX("animations/Talking (1).fbx" );
@@ -88,7 +94,7 @@ export function Model(props) {
 
     if(animation && actions[animation]){
 
-      
+
       actions[animation].reset().fadeIn(0.5).play();
 
     }
