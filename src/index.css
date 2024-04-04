@@ -1,0 +1,39 @@
+#root {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  margin: 0;
+}
+
+.container{
+  width: 100%;
+  height: 100vh;
+}
+
+.canvas_wrapper {
+  position: absolute;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+
+  height: 100vh;
+}
+.container_wrapper{
+  max-width: 80%;
+  margin: 20px auto;
+  position: absolute;
+  top: 0;
+  left: 100px;
+  z-index: 2;
+}
+.btn {
+  width: 100px;
+  color: #fff;
+  background: #7f19e6;
+  border-color: #7f19e6;
+  padding: 10px 20px;
+  border-radius: 10px;
+  
+}

@@ -1,0 +1,27 @@
+{
+  "metadata": {
+    "soundFile": "C:\\Users\\rajes\\Downloads\\r3f-vite-starter-main\\r3f-vite-starter-main\\Rhubarb-Lip-Sync-1.13.0-Windows\\welcome.wav",
+    "duration": 2.58
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.07, "value": "X" },
+    { "start": 0.07, "end": 0.18, "value": "C" },
+    { "start": 0.18, "end": 0.67, "value": "B" },
+    { "start": 0.67, "end": 0.74, "value": "D" },
+    { "start": 0.74, "end": 0.81, "value": "B" },
+    { "start": 0.81, "end": 0.88, "value": "E" },
+    { "start": 0.88, "end": 0.95, "value": "B" },
+    { "start": 0.95, "end": 1.16, "value": "F" },
+    { "start": 1.16, "end": 1.21, "value": "A" },
+    { "start": 1.21, "end": 1.26, "value": "B" },
+    { "start": 1.26, "end": 1.33, "value": "A" },
+    { "start": 1.33, "end": 1.47, "value": "F" },
+    { "start": 1.47, "end": 1.61, "value": "B" },
+    { "start": 1.61, "end": 1.68, "value": "C" },
+    { "start": 1.68, "end": 1.82, "value": "B" },
+    { "start": 1.82, "end": 1.89, "value": "C" },
+    { "start": 1.89, "end": 2.10, "value": "B" },
+    { "start": 2.10, "end": 2.31, "value": "F" },
+    { "start": 2.31, "end": 2.58, "value": "X" }
+  ]
+}
