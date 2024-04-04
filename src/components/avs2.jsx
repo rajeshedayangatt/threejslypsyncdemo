@@ -26,6 +26,10 @@ export function Model(props) {
 
   const [animation, setAnimation] = useState("idle");
 
+  const [lypsyncstate , setLypsync ] = useState(null);
+
+  let currentaudio = useRef(null)
+  let currentlypsync = useRef(null)
 
 
   idleanimation[0].name = "idle";
@@ -37,11 +41,24 @@ export function Model(props) {
     group
   );
 
-
-  console.log(actions)
-
   const audio = useMemo(() => new Audio('audio/welcome.mp3'))
   const audio2 = useMemo(() => new Audio('audio/html.mp3'))
+
+  audio.addEventListener("ended",function() {
+
+    setAnimation("idle")
+
+    console.log("aduio ended")
+
+    nodes.Wolf3D_Head.morphTargetInfluences[
+      nodes.Wolf3D_Head.morphTargetDictionary["viseme_I"]
+    ] = 1;
+    nodes.Wolf3D_Teeth.morphTargetInfluences[
+      nodes.Wolf3D_Teeth.morphTargetDictionary["viseme_I"]
+    ] = 1;
+
+
+  });
 
   audio2.addEventListener("ended",function() {
 
@@ -63,23 +80,28 @@ export function Model(props) {
 
   const jsonFile2 = useLoader(FileLoader,'audio/html.json')
 
-  const lipsync = JSON.parse(jsonFile2)
+  const lipsync = JSON.parse(jsonFile)
+  const lipsync2 = JSON.parse(jsonFile2)
 
 
   useEffect(() => {
 
     if(animation && actions[animation]){
+
+      
       actions[animation].reset().fadeIn(0.5).play();
 
     }
 
     if(animation === "talk"){
       
-      audio2.play()
+
+      currentaudio.current.play()
 
     }
 
-      console.log(actions[animation])
+
+
     return () => actions[animation].fadeOut(0.5);
   }, [animation]);
 
@@ -91,57 +113,62 @@ export function Model(props) {
 
 
 
-      const currentAudioTime = audio2.currentTime
-
-      Object.values(corresponding).forEach((value) => {
-
-        nodes.Wolf3D_Head.morphTargetInfluences[nodes.Wolf3D_Head.morphTargetDictionary[value]] = 0
-        nodes.Wolf3D_Teeth.morphTargetInfluences[nodes.Wolf3D_Teeth.morphTargetDictionary[value]] = 0
-
-      })
-
-      for(let i= 0; i < lipsync.mouthCues.length;i++) {
-          const mouthCure = lipsync.mouthCues[i]
-
-          console.log(mouthCure)
+      if(currentlypsync.current) {
 
 
-          if(currentAudioTime >= mouthCure.start && currentAudioTime <= mouthCure.end ) {
-              console.log(mouthCure.value)
+        const currentAudioTime = currentaudio.current.currentTime
 
-              nodes.Wolf3D_Head.morphTargetInfluences[nodes.Wolf3D_Head.morphTargetDictionary[corresponding[mouthCure.value]]] = 
-              MathUtils.lerp(
-                nodes.Wolf3D_Head.morphTargetInfluences[
-                  nodes.Wolf3D_Head.morphTargetDictionary[
-                    corresponding[mouthCure.value]
-                  ]
-                ],
-                1,
-                0.5
-              );
+        Object.values(corresponding).forEach((value) => {
+  
+          nodes.Wolf3D_Head.morphTargetInfluences[nodes.Wolf3D_Head.morphTargetDictionary[value]] = 0
+          nodes.Wolf3D_Teeth.morphTargetInfluences[nodes.Wolf3D_Teeth.morphTargetDictionary[value]] = 0
+  
+        })
+  
+        for(let i= 0; i < currentlypsync.current.mouthCues.length;i++) {
+            const mouthCure = currentlypsync.current.mouthCues[i]
+  
+  
+  
+            if(currentAudioTime >= mouthCure.start && currentAudioTime <= mouthCure.end ) {
+                console.log(mouthCure.value)
+  
+                nodes.Wolf3D_Head.morphTargetInfluences[nodes.Wolf3D_Head.morphTargetDictionary[corresponding[mouthCure.value]]] = 
+                MathUtils.lerp(
+                  nodes.Wolf3D_Head.morphTargetInfluences[
+                    nodes.Wolf3D_Head.morphTargetDictionary[
+                      corresponding[mouthCure.value]
+                    ]
+                  ],
+                  1,
+                  0.5
+                );
+                
               
-            
-              nodes.Wolf3D_Teeth.morphTargetInfluences[nodes.Wolf3D_Teeth.morphTargetDictionary[corresponding[mouthCure.value]]] = 
-              MathUtils.lerp(
-                nodes.Wolf3D_Teeth.morphTargetInfluences[
-                  nodes.Wolf3D_Teeth.morphTargetDictionary[
-                    corresponding[mouthCure.value]
-                  ]
-                ],
-                1,
-                0.5
-              );
-              
-              break;
-
-          }
-          // else 
-          // {
-          //   setAnimation("idle")
-
-          // }
-
+                nodes.Wolf3D_Teeth.morphTargetInfluences[nodes.Wolf3D_Teeth.morphTargetDictionary[corresponding[mouthCure.value]]] = 
+                MathUtils.lerp(
+                  nodes.Wolf3D_Teeth.morphTargetInfluences[
+                    nodes.Wolf3D_Teeth.morphTargetDictionary[
+                      corresponding[mouthCure.value]
+                    ]
+                  ],
+                  1,
+                  0.5
+                );
+                
+                break;
+  
+            }
+            // else 
+            // {
+            //   setAnimation("idle")
+  
+            // }
+  
+        }
       }
+
+    
 
   })
 
@@ -149,14 +176,20 @@ export function Model(props) {
 
 
     document.getElementById("player").addEventListener("click" , () => {
-
+      currentaudio.current = audio2
+      currentlypsync.current = lipsync2
       setAnimation("talk")
 
 
     })
 
+    document.getElementById("welcome").addEventListener("click" , () => {
 
-    console.log(audio)
+      console.log(audio)
+      currentaudio.current = audio
+      currentlypsync.current = lipsync
+      setAnimation("talk")
+    })
 
 
 },[])

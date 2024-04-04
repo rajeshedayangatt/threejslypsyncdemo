@@ -6,8 +6,9 @@ function App() {
     <div className="container">
     
     <div className="container_wrapper">
-    <button className="btn" id="player">Ask</button>
+    <button className="btn" id="welcome">Welcome</button>
 
+    <button className="btn" id="player">Ask</button>
     </div>
     <div className="canvas_wrapper">
 

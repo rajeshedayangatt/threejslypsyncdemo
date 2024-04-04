@@ -1,9 +1,4 @@
 import { Model } from "./avs2";
-
-
-
-
-
 export function Avatar() {
 
 
